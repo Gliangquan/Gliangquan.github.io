@@ -79,31 +79,6 @@
   
   
   <entry>
-    <title>Docker安装软件</title>
-    <link href="/2024/09/02/docker/Docker%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6/"/>
-    <url>/2024/09/02/docker/Docker%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6/</url>
-    
-    <content type="html"><![CDATA[<h2 id="Docker安装软件"><a href="#Docker安装软件" class="headerlink" title="Docker安装软件"></a>Docker安装软件</h2><h3 id="docker-安装redis"><a href="#docker-安装redis" class="headerlink" title="docker 安装redis"></a>docker 安装redis</h3><p>1）从 Docker Hub 拉取官方 Redis 镜像：</p><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">docker pull redis</span><br></code></pre></td></tr></table></figure><p>启动：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">docker run -d --name redis -p 6379:6379 redis redis-server --requirepass <span class="hljs-string">&quot;liangquan0302&quot;</span><br></code></pre></td></tr></table></figure><p>其中：</p><ul><li>-d：后台运行容器</li><li>–name my-redis：将容器命名为 “my-redis”</li><li>-p 6379:6379：将容器中的端口 6379 映射到主机上的端口 6379</li><li>redis：指定要运行的镜像</li><li>redis-server –requirepass “my-password”：运行 Redis 服务器并要求密码 “my-password”</li></ul><p>2）检查连接</p><ol><li>检查 Redis 容器是否正在运行：</li></ol><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">docker ps</span><br></code></pre></td></tr></table></figure><p>输出应显示容器 “my-redis” 正在运行。</p><ol start="2"><li>使用以下命令连接到 Redis 容器：</li></ol><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">docker exec -<span class="hljs-keyword">it</span> <span class="hljs-keyword">my</span>-redis redis-cli<br></code></pre></td></tr></table></figure><ol start="3"><li>使用设置的密码身份验证：</li></ol><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">AUTH <span class="hljs-keyword">my</span>-password<br></code></pre></td></tr></table></figure><ol start="4"><li>验证连接：</li></ol><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><span class="hljs-built_in">PING</span><br></code></pre></td></tr></table></figure><p>如果输出为 “PONG”，则表示您已成功连接到 Redis 容器。</p><h3 id="docker安装RabbitMQ"><a href="#docker安装RabbitMQ" class="headerlink" title="docker安装RabbitMQ"></a>docker安装RabbitMQ</h3><p>1）拉取 RabbitMQ 镜像**</p><ol><li>从 Docker Hub 拉取官方 RabbitMQ 镜像：</li></ol><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">docker pull rabbitmq</span><br></code></pre></td></tr></table></figure><ol start="2"><li>使用以下命令创建 RabbitMQ 容器并将其命名为 “rabbitmq”：</li></ol><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">docker</span> run -d --name rabbitmq -p <span class="hljs-number">5672</span>:<span class="hljs-number">5672</span> -p <span class="hljs-number">15672</span>:<span class="hljs-number">15672</span> rabbitmq<br></code></pre></td></tr></table></figure><p>其中：</p><ul><li>-d：后台运行容器</li><li>–name my-rabbitmq：将容器命名为 “my-rabbitmq”</li><li>-p 5672:5672：将容器中的端口 5672 映射到主机上的端口 5672（AMQP）</li><li>-p 15672:15672：将容器中的端口 15672 映射到主机上的端口 15672（管理界面）</li><li>rabbitmq：指定要运行的镜像</li></ul><p>2）检查连接</p><p>检查 RabbitMQ 容器是否正在运行：</p><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">docker ps</span><br></code></pre></td></tr></table></figure><p><strong>配置 RabbitMQ</strong></p><ol><li>访问 RabbitMQ 管理界面：<a href="https://www.google.com/url?sa=E&q=http://localhost:15672/">http://localhost:15672/</a></li><li>使用默认凭据（用户名：guest，密码：guest）登录。</li><li>导航到 “Virtual hosts” 选项卡。</li><li>单击 “Add a new virtual host” 按钮。</li><li>输入虚拟主机的名称（例如，”my-vhost”）。</li><li>单击 “Add virtual host” 按钮。</li><li>导航到 “Users” 选项卡。</li><li>单击 “Add a new user” 按钮。</li><li>输入新用户的名称（例如，”my-user”）、密码（例如，”my-password”）和虚拟主机（例如，”my-vhost”）。</li><li>单击 “Add user” 按钮。</li><li>导航到 “Permissions” 选项卡。</li><li>在 “Virtual host” 下拉列表中选择要授予权限的虚拟主机（例如，”my-vhost”）。</li><li>在 “User” 下拉列表中选择要授予权限的用户（例如，”my-user”）。</li><li>选中 “Configure permissions” 部分中所需的权限（例如，”Read”、”Write”）。</li><li>单击 “Set permissions” 按钮。</li></ol><p>3）验证配置</p><ol><li>使用以下命令连接到 RabbitMQ 容器：</li></ol><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">docker exec -<span class="hljs-keyword">it</span> <span class="hljs-keyword">my</span>-rabbitmq rabbitmqctl status<br></code></pre></td></tr></table></figure><p>输出应显示 RabbitMQ 服务器正在运行。</p><ol><li>使用以下命令检查虚拟主机是否存在：</li></ol><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">docker exec -<span class="hljs-keyword">it</span> <span class="hljs-keyword">my</span>-rabbitmq rabbitmqctl list_vhosts<br></code></pre></td></tr></table></figure><p>输出应包含您创建的虚拟主机（例如，”my-vhost”）。</p><ol><li>使用以下命令检查用户是否存在：</li></ol><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">docker exec -<span class="hljs-keyword">it</span> <span class="hljs-keyword">my</span>-rabbitmq rabbitmqctl list_users<br></code></pre></td></tr></table></figure><p>输出应包含您创建的用户（例如，”my-user”）。</p><h4 id="ps-如果访问管理页面访问不到"><a href="#ps-如果访问管理页面访问不到" class="headerlink" title="ps 如果访问管理页面访问不到"></a>ps 如果访问管理页面访问不到</h4><p>进入容器：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker <span class="hljs-built_in">exec</span> -it 容器<span class="hljs-built_in">id</span> /bin/bash<br></code></pre></td></tr></table></figure><p>执行命令:</p><p><strong>开启界面插件</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">rabbitmq-plugins <span class="hljs-built_in">enable</span> rabbitmq_management<br></code></pre></td></tr></table></figure>]]></content>
-    
-    
-    <categories>
-      
-      <category>docker</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>docker</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>ThreeJs开发文档</title>
     <link href="/2024/09/02/ThreeJs%E5%AD%A6%E4%B9%A0/threeJs%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/"/>
     <url>/2024/09/02/ThreeJs%E5%AD%A6%E4%B9%A0/threeJs%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/</url>
@@ -129,6 +104,31 @@
   
   
   <entry>
+    <title>Docker安装软件</title>
+    <link href="/2024/09/02/docker/Docker%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6/"/>
+    <url>/2024/09/02/docker/Docker%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6/</url>
+    
+    <content type="html"><![CDATA[<h2 id="Docker安装软件"><a href="#Docker安装软件" class="headerlink" title="Docker安装软件"></a>Docker安装软件</h2><h3 id="docker-安装redis"><a href="#docker-安装redis" class="headerlink" title="docker 安装redis"></a>docker 安装redis</h3><p>1）从 Docker Hub 拉取官方 Redis 镜像：</p><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">docker pull redis</span><br></code></pre></td></tr></table></figure><p>启动：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">docker run -d --name redis -p 6379:6379 redis redis-server --requirepass <span class="hljs-string">&quot;liangquan0302&quot;</span><br></code></pre></td></tr></table></figure><p>其中：</p><ul><li>-d：后台运行容器</li><li>–name my-redis：将容器命名为 “my-redis”</li><li>-p 6379:6379：将容器中的端口 6379 映射到主机上的端口 6379</li><li>redis：指定要运行的镜像</li><li>redis-server –requirepass “my-password”：运行 Redis 服务器并要求密码 “my-password”</li></ul><p>2）检查连接</p><ol><li>检查 Redis 容器是否正在运行：</li></ol><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">docker ps</span><br></code></pre></td></tr></table></figure><p>输出应显示容器 “my-redis” 正在运行。</p><ol start="2"><li>使用以下命令连接到 Redis 容器：</li></ol><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">docker exec -<span class="hljs-keyword">it</span> <span class="hljs-keyword">my</span>-redis redis-cli<br></code></pre></td></tr></table></figure><ol start="3"><li>使用设置的密码身份验证：</li></ol><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">AUTH <span class="hljs-keyword">my</span>-password<br></code></pre></td></tr></table></figure><ol start="4"><li>验证连接：</li></ol><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><span class="hljs-built_in">PING</span><br></code></pre></td></tr></table></figure><p>如果输出为 “PONG”，则表示您已成功连接到 Redis 容器。</p><h3 id="docker安装RabbitMQ"><a href="#docker安装RabbitMQ" class="headerlink" title="docker安装RabbitMQ"></a>docker安装RabbitMQ</h3><p>1）拉取 RabbitMQ 镜像**</p><ol><li>从 Docker Hub 拉取官方 RabbitMQ 镜像：</li></ol><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">docker pull rabbitmq</span><br></code></pre></td></tr></table></figure><ol start="2"><li>使用以下命令创建 RabbitMQ 容器并将其命名为 “rabbitmq”：</li></ol><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">docker</span> run -d --name rabbitmq -p <span class="hljs-number">5672</span>:<span class="hljs-number">5672</span> -p <span class="hljs-number">15672</span>:<span class="hljs-number">15672</span> rabbitmq<br></code></pre></td></tr></table></figure><p>其中：</p><ul><li>-d：后台运行容器</li><li>–name my-rabbitmq：将容器命名为 “my-rabbitmq”</li><li>-p 5672:5672：将容器中的端口 5672 映射到主机上的端口 5672（AMQP）</li><li>-p 15672:15672：将容器中的端口 15672 映射到主机上的端口 15672（管理界面）</li><li>rabbitmq：指定要运行的镜像</li></ul><p>2）检查连接</p><p>检查 RabbitMQ 容器是否正在运行：</p><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">docker ps</span><br></code></pre></td></tr></table></figure><p><strong>配置 RabbitMQ</strong></p><ol><li>访问 RabbitMQ 管理界面：<a href="https://www.google.com/url?sa=E&q=http://localhost:15672/">http://localhost:15672/</a></li><li>使用默认凭据（用户名：guest，密码：guest）登录。</li><li>导航到 “Virtual hosts” 选项卡。</li><li>单击 “Add a new virtual host” 按钮。</li><li>输入虚拟主机的名称（例如，”my-vhost”）。</li><li>单击 “Add virtual host” 按钮。</li><li>导航到 “Users” 选项卡。</li><li>单击 “Add a new user” 按钮。</li><li>输入新用户的名称（例如，”my-user”）、密码（例如，”my-password”）和虚拟主机（例如，”my-vhost”）。</li><li>单击 “Add user” 按钮。</li><li>导航到 “Permissions” 选项卡。</li><li>在 “Virtual host” 下拉列表中选择要授予权限的虚拟主机（例如，”my-vhost”）。</li><li>在 “User” 下拉列表中选择要授予权限的用户（例如，”my-user”）。</li><li>选中 “Configure permissions” 部分中所需的权限（例如，”Read”、”Write”）。</li><li>单击 “Set permissions” 按钮。</li></ol><p>3）验证配置</p><ol><li>使用以下命令连接到 RabbitMQ 容器：</li></ol><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">docker exec -<span class="hljs-keyword">it</span> <span class="hljs-keyword">my</span>-rabbitmq rabbitmqctl status<br></code></pre></td></tr></table></figure><p>输出应显示 RabbitMQ 服务器正在运行。</p><ol><li>使用以下命令检查虚拟主机是否存在：</li></ol><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">docker exec -<span class="hljs-keyword">it</span> <span class="hljs-keyword">my</span>-rabbitmq rabbitmqctl list_vhosts<br></code></pre></td></tr></table></figure><p>输出应包含您创建的虚拟主机（例如，”my-vhost”）。</p><ol><li>使用以下命令检查用户是否存在：</li></ol><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">docker exec -<span class="hljs-keyword">it</span> <span class="hljs-keyword">my</span>-rabbitmq rabbitmqctl list_users<br></code></pre></td></tr></table></figure><p>输出应包含您创建的用户（例如，”my-user”）。</p><h4 id="ps-如果访问管理页面访问不到"><a href="#ps-如果访问管理页面访问不到" class="headerlink" title="ps 如果访问管理页面访问不到"></a>ps 如果访问管理页面访问不到</h4><p>进入容器：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker <span class="hljs-built_in">exec</span> -it 容器<span class="hljs-built_in">id</span> /bin/bash<br></code></pre></td></tr></table></figure><p>执行命令:</p><p><strong>开启界面插件</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">rabbitmq-plugins <span class="hljs-built_in">enable</span> rabbitmq_management<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>docker</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>docker</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>记录一次collabora online安装部署</title>
     <link href="/2024/09/02/%E5%9C%A8%E7%BA%BF%E7%BC%96%E8%BE%91%E5%99%A8collabora/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2online/"/>
     <url>/2024/09/02/%E5%9C%A8%E7%BA%BF%E7%BC%96%E8%BE%91%E5%99%A8collabora/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2online/</url>
@@ -146,31 +146,6 @@
     <tags>
       
       <tag>collabora</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>深度学习环境配置</title>
-    <link href="/2024/09/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
-    <url>/2024/09/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
-    
-    <content type="html"><![CDATA[<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><h3 id="安装-Anaconda"><a href="#安装-Anaconda" class="headerlink" title="安装 Anaconda"></a>安装 Anaconda</h3><p>1）下载地址：<a href="https://www.anaconda.com/download/success">https://www.anaconda.com/download/success</a></p><p>2）Anaconda是python的一个开源发行版本，主要面向科学计算。我们可以理解为Anaconda是一个预装了很多我们用的到或用不到的第三方库的python。Anaconda里面增加了conda install命令，比pip install方便一些。</p><p>3）替换国内镜像源：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 这里使用的VPN</span><br></code></pre></td></tr></table></figure><p>4）创建新的环境</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 创建一个名为 &quot;myenv&quot; 的新环境，并指定 Python 版本为 3.8：</span><br>conda create -n myenv python=3.8<br></code></pre></td></tr></table></figure><p>5）激活环境</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">conda activate myenv<br></code></pre></td></tr></table></figure><p>一些额外的小技巧：</p><ul><li>使用 conda list 查看当前环境中的所有已安装包。</li><li>使用 conda search <package_name> 搜索特定包。</package_name></li><li>使用 conda update -n <env_name> <package_name> 更新指定环境中的特定包。</package_name></env_name></li><li>使用 conda remove -n <env_name> <package_name> 从指定环境中删除特定包。</package_name></env_name></li><li>使用 conda env list 查看所有已创建的环境。</li><li>使用 conda env remove -n <env_name> 删除指定环境。</env_name></li></ul><p><strong>一些注意事项：</strong></p><ul><li>在使用 conda 创建环境时，建议在命令中添加 -y 选项，这样可以跳过所有确认提示。</li><li>每个环境都有自己的独立的库和依赖项，不会影响其他环境。</li><li>在不同的环境之间切换时，需要使用 conda activate 命令来激活相应的环境。</li><li>如果你遇到问题，可以使用 conda update -n base conda 来更新 conda 本身。</li></ul><h3 id="Jupyter"><a href="#Jupyter" class="headerlink" title="Jupyter"></a>Jupyter</h3><p>1）notebook可以直接在代码旁写出叙述性文档，而不是另外编写单独的文档。也就是他可以将代码，文档等一切集中到一处，让用户一目了然。</p><p>2）安装好以后可以使用jupyter notebook直接在本地运行一个服务，在浏览器访问即可。</p><h3 id="PyTorch"><a href="#PyTorch" class="headerlink" title="PyTorch"></a>PyTorch</h3><p>1）安装PyTorch，访问官网：<a href="https://pytorch.org/%EF%BC%8C%E6%89%BE%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84conda%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4%EF%BC%8C%E5%A4%8D%E5%88%B6%E5%88%B0conda%E5%AE%89%E8%A3%85%E5%8D%B3%E5%8F%AF%E3%80%82">https://pytorch.org/，找到对应的conda安装命令，复制到conda安装即可。</a></p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">conda install pytorch::pytorch torchvision torchaudio -c pytorch<br></code></pre></td></tr></table></figure><p>安装好以后使用<code>conda list | grep torch</code>查看版本</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh">(base) liangquan@liangquandeMacBook-Pro ~ % conda list | grep torch<br>pytorch                   2.4.0                  py3.12_0    pytorch<br>torchaudio                2.4.0                 py312_cpu    pytorch<br>torchvision               0.19.0                py312_cpu    pytorch<br></code></pre></td></tr></table></figure>]]></content>
-    
-    
-    <categories>
-      
-      <category>深度学习</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>深度学习</tag>
       
     </tags>
     
@@ -221,6 +196,31 @@
     <tags>
       
       <tag>操作系统</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>深度学习环境配置</title>
+    <link href="/2024/09/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+    <url>/2024/09/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
+    
+    <content type="html"><![CDATA[<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><h3 id="安装-Anaconda"><a href="#安装-Anaconda" class="headerlink" title="安装 Anaconda"></a>安装 Anaconda</h3><p>1）下载地址：<a href="https://www.anaconda.com/download/success">https://www.anaconda.com/download/success</a></p><p>2）Anaconda是python的一个开源发行版本，主要面向科学计算。我们可以理解为Anaconda是一个预装了很多我们用的到或用不到的第三方库的python。Anaconda里面增加了conda install命令，比pip install方便一些。</p><p>3）替换国内镜像源：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 这里使用的VPN</span><br></code></pre></td></tr></table></figure><p>4）创建新的环境</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 创建一个名为 &quot;myenv&quot; 的新环境，并指定 Python 版本为 3.8：</span><br>conda create -n myenv python=3.8<br></code></pre></td></tr></table></figure><p>5）激活环境</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">conda activate myenv<br></code></pre></td></tr></table></figure><p>一些额外的小技巧：</p><ul><li>使用 conda list 查看当前环境中的所有已安装包。</li><li>使用 conda search <package_name> 搜索特定包。</package_name></li><li>使用 conda update -n <env_name> <package_name> 更新指定环境中的特定包。</package_name></env_name></li><li>使用 conda remove -n <env_name> <package_name> 从指定环境中删除特定包。</package_name></env_name></li><li>使用 conda env list 查看所有已创建的环境。</li><li>使用 conda env remove -n <env_name> 删除指定环境。</env_name></li></ul><p><strong>一些注意事项：</strong></p><ul><li>在使用 conda 创建环境时，建议在命令中添加 -y 选项，这样可以跳过所有确认提示。</li><li>每个环境都有自己的独立的库和依赖项，不会影响其他环境。</li><li>在不同的环境之间切换时，需要使用 conda activate 命令来激活相应的环境。</li><li>如果你遇到问题，可以使用 conda update -n base conda 来更新 conda 本身。</li></ul><h3 id="Jupyter"><a href="#Jupyter" class="headerlink" title="Jupyter"></a>Jupyter</h3><p>1）notebook可以直接在代码旁写出叙述性文档，而不是另外编写单独的文档。也就是他可以将代码，文档等一切集中到一处，让用户一目了然。</p><p>2）安装好以后可以使用jupyter notebook直接在本地运行一个服务，在浏览器访问即可。</p><h3 id="PyTorch"><a href="#PyTorch" class="headerlink" title="PyTorch"></a>PyTorch</h3><p>1）安装PyTorch，访问官网：<a href="https://pytorch.org/%EF%BC%8C%E6%89%BE%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84conda%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4%EF%BC%8C%E5%A4%8D%E5%88%B6%E5%88%B0conda%E5%AE%89%E8%A3%85%E5%8D%B3%E5%8F%AF%E3%80%82">https://pytorch.org/，找到对应的conda安装命令，复制到conda安装即可。</a></p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">conda install pytorch::pytorch torchvision torchaudio -c pytorch<br></code></pre></td></tr></table></figure><p>安装好以后使用<code>conda list | grep torch</code>查看版本</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh">(base) liangquan@liangquandeMacBook-Pro ~ % conda list | grep torch<br>pytorch                   2.4.0                  py3.12_0    pytorch<br>torchaudio                2.4.0                 py312_cpu    pytorch<br>torchvision               0.19.0                py312_cpu    pytorch<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>深度学习</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
